@@ -1,6 +1,6 @@
 {
-  "short_name": "BeStyled Gamepad",
-  "name": "BeStyled Gamepad for React Demo",
+  "short_name": "Robot Gamepad",
+  "name": "Robot Gamepad for React Demo",
   "icons": [
     {
       "src": "favicon.ico",

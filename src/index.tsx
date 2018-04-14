@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import App from './ExampleApp';
+import App from './app';
 
 import {injectGlobal} from 'styled-components';
 

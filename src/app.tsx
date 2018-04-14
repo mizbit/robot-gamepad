@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { GamepadInput as Gamepad, GamepadPreview } from '../Components';
-import { Gauge } from './ComponentsForExample/Gauge';
-import { Panel, PanelRow } from './ComponentsForExample/Layout';
+import { GamepadInput as Gamepad, GamepadPreview } from '@bestyled/gamepad';
+import { Gauge } from './Components/Gauge';
+import { Panel, PanelRow } from './Components/Layout';
 
 class App extends React.Component<any, any> {
 
@@ -107,8 +107,8 @@ class App extends React.Component<any, any> {
           onDisconnect={this.disconnectHandler.bind(this)}
           onAxis={this.onAxisValue.bind(this)}
           onButton={this.onButton.bind(this)} >
-          <GamepadPreview />
-        </Gamepad>
+          <GamepadPreview src="http://res.cloudinary.com/headlight/image/upload/v1523206548/gamepadSprite.png"/>
+          </Gamepad>
         {this.state.connected &&
           <PanelRow>
             <Gauge value={this.state.leftMotor} />
