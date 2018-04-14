@@ -10,9 +10,15 @@ export default class MotorsStore {
     this.rightMotor = 0;
 
     autorun(() => {
-        store.gpio.pin.set("v0", this.leftMotor);
-        store.gpio.pin.set("v1", this.rightMotor);
-    })
+      store.rpc.call("Robot.cmd", { cmd: "motor", left: Math.round(this.leftMotor), right: Math.round(this.rightMotor) }, "",
+        function (err, result, tag) {
+          if (err) {
+            console.log(err);
+          } 
+        });
+
+        console.log(this.leftMotor);
+    }, {delay: 200})
 
   }
 }

@@ -24,6 +24,9 @@ export default class GpioStore {
     }
 
     onAxisValue(axisName: string, dimension: string, value: number, previousValue: number) {
+
+        if (Math.abs(value) < 0.1) value =0;
+
         if (!this.axis.has(axisName)) {
             let val = { x: (dimension == "x") ? value : 0, y: (dimension == "y") ? value : 0 };
             this.axis.set(axisName, val);

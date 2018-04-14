@@ -16,14 +16,14 @@ class App extends React.Component<{ store?: StoreProps }, any> {
   constructor(props) {
     super(props);
 
-    this._observers = { 
-      axis: this.props.store.gamepad.axis.observe(this.onAxisChange.bind(this));
+    this._observers = {
+      axis: this.props.store.gamepad.axis.observe(this.onAxisChange.bind(this)),
       button: this.props.store.gamepad.button.observe(this.onButtonChange.bind(this))
     }
   }
 
   onAxisChange(axis: IMapDidChange<string, { x: number, y: number }>) {
-     if (axis.name !== "leftStick" ) return;
+    if (axis.name !== "leftStick") return;
 
     let newValue = axis.object.get(axis.name);
     let x = newValue.x;
@@ -57,21 +57,27 @@ class App extends React.Component<{ store?: StoreProps }, any> {
     let z = rightspeed * scale * direction;
     let w = leftspeed * scale * direction;
 
-   this.props.store.motors.leftMotor = w;
-   this.props.store.motors.rightMotor = z;
+    this.props.store.motors.leftMotor = w;
+    this.props.store.motors.rightMotor = z;
 
   }
 
   onButtonChange(change: IMapDidChange<string, boolean>) {
-    if (change.object.get(change.name))
+    if (change.object.get(change.name)) {
       console.log("Button " + change.name);
+      this.props.store.rpc.call("Robot.cmd", { cmd: "motor", left: 0, right: 0 }, "",
+        function (err, result, tag) {
+          if (err) { console.log(err); }
+        });
+    }
+
   }
 
   componentWillUnmount() {
     this._observers.axis();
     this._observers.button();
   }
-  
+
   render() {
     let gamepad = this.props.store.gamepad;
     return (

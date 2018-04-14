@@ -7,22 +7,23 @@ export default class Rpc {
     private _timerHandle = null;
     private _queueSize = 0;
     private _queue = {};
-  
-    constructor(options: any) {
-  
-      let { host } = options;
-      this.ws = new WebSocket("ws://" + host + "/rpc");
-  
+    private _host;
+
+    private connect() {
+      console.log("connecting to " + "ws://" + this._host + "/rpc");
+      this.ws = new WebSocket("ws://" + this._host + "/rpc");
+      this.active = false;
+      this._disableTimer();
+    
       this.ws.addEventListener("open", (ev) => {
         this.active = true;
-        console.log("open");
-        // TODO: emit open
+        console.log("opened rpc socket");
       })
   
       this.ws.addEventListener("close", (ev) => {
         this.active = false;
-        console.log("close");
-        // TODO: emit close
+        console.log("closed rpc socket");
+        this._disableTimer();
       })
   
       this.ws.addEventListener("error", (ev) => {
@@ -37,14 +38,24 @@ export default class Rpc {
           this._onmessage(obj);
   
         } catch (e) {
+          console.log(ev.data);
           console.log(e);
           // self.emit('error', new Error("Unable to parse JSON string."), data, e);
         }
   
       })
+
+      this.frameid = 0;
+    }
+  
+    constructor(options: any) {
+  
+      let { host } = options;
+      this._host = host;
   
       this.timeout = options.timeout || 10000;
-      this.frameid = 0;
+
+      this.connect();
     }
   
     _disableTimer() {
@@ -141,6 +152,8 @@ export default class Rpc {
     call(methodName: string, args: object, tag: string, callback: (error: any, result: any, tag: string) => void) {
   
       if (!this.active) {
+
+        this.connect();
   
         let error = {
           "code": 400,
