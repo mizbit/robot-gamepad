@@ -1,5 +1,5 @@
 {
-  "name": "bestyled-gamepad",
+  "name": "robot-gamepad",
   "version": "0.1.0",
   "private": false,
   "license": "Apache-2.0",
@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start": "fuse-box-react-scripts start",
-    "build": "rimraf docs && fuse-box-react-scripts build && cp -a ./build ./docs",
+    "build": "rimraf ../fs && fuse-box-react-scripts build && cp -a ./build ../fs && cp ../src/js/*.js ../fs",
     "test": "fuse-box-react-scripts test --env=jsdom",
     "eject": "fuse-box-react-scripts eject",
     "ejectconfig": "fuse-box-react-scripts ejectconfig"

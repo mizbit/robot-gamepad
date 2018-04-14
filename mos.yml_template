@@ -1,0 +1,46 @@
+author: Headlight Studios
+description: Robot with Xbox Gamepad for ESP32 Mongoose OS, SSD1306, L298N
+version: 1.0
+
+libs_version: ${mos.version}
+modules_version: ${mos.version}
+mongoose_os_version: ${mos.version}
+platform: esp32
+
+filesystem:
+  - fs
+
+sources:
+  - src
+
+libs:
+  - origin: https://github.com/mongoose-os-libs/dns-sd
+  - origin: https://github.com/mongoose-os-libs/rpc-service-config
+  - origin: https://github.com/mongoose-os-libs/rpc-service-fs
+  - origin: https://github.com/mongoose-os-libs/rpc-uart
+  - origin: https://github.com/mongoose-os-libs/wifi
+  - origin: https://github.com/mongoose-os-libs/arduino-adafruit-ssd1306
+  - origin: https://github.com/mongoose-os-libs/mjs
+  - origin: https://github.com/mongoose-os-libs/http-server
+  - origin: https://github.com/mongoose-os-libs/ota-http-client
+  - origin: https://github.com/mongoose-os-libs/pwm
+
+
+config_schema:
+  - ["i2c.enable", true]
+  - ["i2c.sda_gpio", 4]
+  - ["i2c.scl_gpio", 15]
+  - ["i2c.debug", false]
+  - ["app", "o", {title: "Custom app settings"}]
+  - ["app.ssd1306_reset_pin", "i", 16, {title: "SSD1306 display reset pin"}]
+  - ["wifi.ap.enable", false]
+  - ["wifi.sta.enable", true]
+  - ["wifi.sta.ssid", "XXXXXXXXXX"]
+  - ["wifi.sta.pass", "XXXXXXXXX"]
+  - ["debug.level", 2]
+  - ["dns_sd.enable", "b", true, {title: "Enable service discovery"}]
+  - ["dns_sd.host_name", "s", "robot-??????", {title: "DNS-SD host name. '?' chars will be expanded with MAC address hex digits"}]
+  - ["dns_sd.txt", "s", "", {title: "Extra comma-separated key=value pairs to put into the TXT service record"}]
+  - ["dns_sd.ttl", "i", 120, {title: "Time-to-live in seconds"}]
+
+manifest_version: 2017-06-29
