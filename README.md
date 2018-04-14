@@ -47,7 +47,13 @@ In a Chrome or Edge browser, navigate to http://robot-?????.local where ????? is
 
 You should see something like:
 
-![Xbox One Controller](https://github.com/willscreate/robot-gamepad/raw/master/robotgamepad.png "Responsive Preview")
+<script src="https://vjs.zencdn.net/6.7/video.min.js"></script>
+
+<video id="robot-preview" class="video-js vjs-default-skin" controls
+preload="auto" width="683" height="384" poster="https://github.com/willscreate/robot-gamepad/raw/master/robotgamepad.png"
+data-setup="{}">
+<source src="https://github.com/willscreate/robot-gamepad/raw/master/preview.mp4" type='video/mp4'>
+</video>
 
 Move the left joystick to move the robot.
 
