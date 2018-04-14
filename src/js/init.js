@@ -63,29 +63,7 @@ function init() {
 
 init();
 
-RPC.addHandler("Robot.cmd", function(args) {
-
-  if (args.cmd === "motor") {
-
-    statusleft = JSON.stringify(args.left);
-    statusright = JSON.stringify(args.right);
-
-
-    main();
-  } 
-
-  return {};
-});
-
 let LED = 25;
-
-//Stepper motor react
-let V_ASPEED = 0; //virtual pin
-let V_BSPEED = 1; //virtual pin
-let V_AFORWARD = 2; //virtual pin
-let V_BFORWARD = 3; //virtual pin
-let V_AREVERSE = 4; //virtual pin
-let V_BREVERSE = 5; //virtual pin
 
 //Stepper Motor Pin Variables
 let motor_a_enable_pin = 21; //ENA
@@ -109,32 +87,32 @@ let Motor = {
     GPIO.set_mode(motor_b_reverse_pin, GPIO.MODE_OUTPUT);
 
     //Stop
-    //  Motor.stopA();
-    //  Motor.stopB();
+    Motor.stopA();
+    Motor.stopB();
   },
 
-  forwardA: function () {
+  forwardA: function (speed) {
     GPIO.write(motor_a_forward_pin, 1);
     GPIO.write(motor_a_reverse_pin, 0);
-    PWM.set(motor_a_enable_pin, 500, 0.5);
+    PWM.set(motor_a_enable_pin, 500, speed / 100);
   },
 
-  reverseA: function () {
+  reverseA: function (speed) {
     GPIO.write(motor_a_forward_pin, 0);
     GPIO.write(motor_a_reverse_pin, 1);
-    PWM.set(motor_a_enable_pin, 500, 0.5);
+    PWM.set(motor_a_enable_pin, 500, speed / 100);
   },
 
-  reverseA: function () {
-    GPIO.write(motor_a_forward_pin, 1);
-    GPIO.write(motor_a_reverse_pin, 0);
-    PWM.set(motor_a_enable_pin, 500, 0.5);
+  forwardB: function (speed) {
+    GPIO.write(motor_b_forward_pin, 1);
+    GPIO.write(motor_b_reverse_pin, 0);
+    PWM.set(motor_b_enable_pin, 500, speed / 100);
   },
 
-  reverseA: function () {
-    GPIO.write(motor_a_forward_pin, 0);
-    GPIO.write(motor_a_reverse_pin, 1);
-    PWM.set(motor_a_enable_pin, 500, 0.5);
+  reverseB: function (speed) {
+    GPIO.write(motor_b_forward_pin, 0);
+    GPIO.write(motor_b_reverse_pin, 1);
+    PWM.set(motor_b_enable_pin, 500, speed / 100);
   },
 
   stopA: function () {
@@ -152,6 +130,40 @@ let Motor = {
 
 Motor.init();
 print("motor ok")
+
+RPC.addHandler("Robot.cmd", function (args) {
+
+  if (args.cmd === "motor") {
+
+    statusleft = JSON.stringify(args.left);
+    statusright = JSON.stringify(args.right);
+
+    if (args.left < 0) {
+      Motor.reverseA(-1 * args.left);
+    }
+    else if (args.left > 0) {
+      Motor.forwardA(args.left);
+    }
+    else {
+      Motor.stopA();
+    }
+
+    if (args.right < 0) {
+      Motor.reverseB(-1 * args.right);
+    }
+    else if (args.right > 0) {
+      Motor.forwardB(args.right);
+    }
+    else {
+      Motor.stopB();
+    }
+
+
+    main();
+  }
+
+  return {};
+});
 
 // Blink built-in LED every second
 GPIO.set_mode(LED, GPIO.MODE_OUTPUT);
