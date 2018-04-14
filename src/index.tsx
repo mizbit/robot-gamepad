@@ -2,7 +2,11 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import App from './app';
 
-import {injectGlobal} from 'styled-components';
+
+import { Provider } from 'mobx-react';
+import store from './stores';
+
+import { injectGlobal } from 'styled-components';
 
 injectGlobal`
 body {
@@ -21,4 +25,7 @@ body {
   }
   `;
 
-ReactDOM.render(<App />, document.getElementById('root'));
+
+ReactDOM.render(<Provider store={store}>
+  <App />
+</Provider>, document.getElementById('root'));

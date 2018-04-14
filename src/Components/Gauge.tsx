@@ -13,14 +13,15 @@ export class Gauge extends React.Component<{ value: number }> {
   }
 
   componentDidMount() {
-    window.requestAnimationFrame(this.updateAnimationBound);
+     window.requestAnimationFrame(this.updateAnimationBound);
   }
 
   componentDidUpdate() {
-   window.requestAnimationFrame(this.updateAnimationBound);
+     window.requestAnimationFrame(this.updateAnimationBound);
   }
 
   canvasDidMount(canvas: HTMLCanvasElement) {
+   
     if (!canvas) return;
      
     const opts = {
