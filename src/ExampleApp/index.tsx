@@ -10,6 +10,8 @@ class App extends React.Component<any, any> {
     super(props, context);
     this.state = {
       connected: false,
+      x: 0,
+      y: 0,
       leftMotor: 0,
       rightMotor: 0
     };
@@ -34,12 +36,56 @@ class App extends React.Component<any, any> {
 
   /** Option callback invoked whenever a controller stick or variable trigger changes */
   onAxisValue(axisName: string, dimension: string, value: number, previousValue: number) {
+
+
+
     switch (axisName) {
-      case "leftTrigger":
-        this.setState({ leftMotor: value * 100 })
-        break;
-      case "rightTrigger":
-        this.setState({ rightMotor: value * 100 })
+      case "leftStick":
+
+        let x = this.state.x;
+        let y = this.state.y;
+
+        if (dimension == "x")
+          x = value;
+        else
+          y = -1 * value;
+
+        this.setState({ x: x, y: y });
+
+        let scale = Math.sqrt((x * x) + (y * y))
+        let angle = Math.atan2(x, y) * (180 / Math.PI);
+
+        console.log(`x=${x}, y=${y}, angle=${angle}, scale=${scale}`);
+
+        let leftspeed, rightspeed, direction;
+        if ((angle > 0) && (angle <= 90)) {
+          leftspeed = 100;
+          rightspeed = (90-angle) / 90*100
+
+        } else if ((angle > 90) && (angle <= 180)) {
+          leftspeed = 100;
+          rightspeed = (angle - 90) / 90*100
+        } else if ((angle < -90) && (angle >= -180)) {
+          rightspeed = 100
+          leftspeed = ((angle * -1) - 90) / 90 * 100
+
+        } else /* angle between -90 and 0)*/  {
+          rightspeed = 100
+          leftspeed = (90-(angle * -1)  / 90 * 100
+        }
+
+        if (y > 0)
+          direction = 1;
+        else 
+          direction = -1;
+
+          let z = rightspeed * scale * direction;
+          let w = leftspeed * scale * direction;
+
+          console.log(`left ${w}, right ${z}`);
+
+        this.setState({leftMotor: w + 100, rightMotor : z +100 });
+
         break;
       default:
       // no op
