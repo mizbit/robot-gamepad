@@ -1,8 +1,16 @@
 ## Overview
 
-This is a Mongoose OS app for the ESP32 Heltec WifiKit or ESP32 Heltec Lora with OLED.   It should work with other IOT boards connected to a SSD1306 over I2C by changing the `mos.yml` config settings.
+This is the source code for the blog article on [Medium](https://medium.com/@wills_15862/i-built-a-robot-35ca67e7b811)
 
-It programs an L298N to move a floor robot with an Xbox 360 or Xbox One controller connected to a browser on the same wifi network.
+It runs a robot that has an embedded web server that allows control by any connected gamepad, such as the Xbox One controller gamepad.  The software is all written in Javascript, with React used for the website and HTML5 gamepad control, and using mongoose Javascript for the Internet of Things (IOT) Mongoose Operating System for a $10-$20 ESP32 device.   
+
+So it's doesnt require the Arduino workbench, nor a Raspberry Pi, just the ESP32 development board itself.
+
+We used a ESP32 Heltec WifiKit and have also tested it on the ESP32 Heltec Lora with OLED.   It should work with other IOT boards connected to a SSD1306 LCD display over I2C by changing the `mos.yml` config settings.
+
+It programs a L298N (a motor controller commonly used with Arduinos) to move the floor robot.  The  Xbox 360 or Xbox One controller connects to a desktop browser via bluetooth or a cable, and the browser connects to the ESP32 via WiFi.
+
+The instructions below are if you want to recreate the device image and flash on an ESP32 development board.
 
 ## 1. Install MOS on development machine
 
