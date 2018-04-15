@@ -1,6 +1,8 @@
 ## Overview
 
-This is the source code for the blog article on [Medium](https://medium.com/@wills_15862/i-built-a-robot-35ca67e7b811)
+This is the source code for the [blog article](https://medium.com/@wills_15862/i-built-a-robot-35ca67e7b811) on Medium.
+
+![I built a Robot](https://cdn-images-1.medium.com/max/800/1*5ju9ij0dZJxP8Glak-pcOQ.jpeg)
 
 It runs a robot that has an embedded web server that allows control by any connected gamepad, such as the Xbox One controller gamepad.  The software is all written in Javascript, with React used for the website and HTML5 gamepad control, and using mongoose Javascript for the Internet of Things (IOT) Mongoose Operating System for a $10-$20 ESP32 device.   
 
