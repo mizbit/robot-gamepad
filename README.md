@@ -4,9 +4,9 @@ This is the source code for the [blog article](https://medium.com/@wills_15862/i
 
 ![I built a Robot](https://cdn-images-1.medium.com/max/800/1*5ju9ij0dZJxP8Glak-pcOQ.jpeg)
 
-It runs a robot that has an embedded web server that allows control by any connected gamepad, such as the Xbox One controller gamepad.  The software is all written in Javascript, with React used for the website and HTML5 gamepad control, and using mongoose Javascript for the Internet of Things (IOT) Mongoose Operating System for a $10-$20 ESP32 device.   
+It runs a robot that has an embedded web server that allows control by any connected gamepad, such as the Xbox One controller gamepad.  The software is all written in Javascript, with React used for the website and HTML5 gamepad control, and mjs Javascript for the Internet of Things (IOT) Mongoose Operating System for a $10-$20 ESP32 device.   
 
-So it's doesnt require the Arduino workbench, nor a Raspberry Pi, just the ESP32 development board itself.
+So it's doesnt require the Arduino workbench, nor a Raspberry Pi, just the ESP32 development board itself.  The ESP32 displays simple graphics and the current speed of the left and right motors.
 
 We used a ESP32 Heltec WifiKit and have also tested it on the ESP32 Heltec Lora with OLED.   It should work with other IOT boards connected to a SSD1306 LCD display over I2C by changing the `mos.yml` config settings.
 
